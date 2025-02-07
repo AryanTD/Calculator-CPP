@@ -39,6 +39,35 @@ double squareRoot(double num) {
     return sqrt(num);
 }
 
+double getValidNumber() {
+    double num;
+    while (true) {
+        cin >> num;
+        if (cin.fail()) { // Check if input failed
+            cout << "Invalid input! Please enter a valid number: ";
+            cin.clear(); // Clear error flag
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Ignore incorrect input
+        } else {
+            return num;
+        }
+    }
+}
+
+// Function to get a valid menu choice
+int getValidChoice() {
+    int choice;
+    while (true) {
+        cin >> choice;
+        if (cin.fail() || choice < 1 || choice > 8) {
+            cout << "Invalid choice! Enter a number between 1 and 8: ";
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        } else {
+            return choice;
+        }
+    }
+}
+
 int main() {
     int choice;
     double num1, num2, result;
@@ -54,7 +83,8 @@ int main() {
         cout << "7. Trigonometric Functions (sin, cos, tan)\n";
         cout << "8. Exit\n";
         cout << "Choose an option (1-8): ";
-        cin >> choice;
+        
+        choice = getValidChoice();
 
         if (choice == 8) {
             cout << "Exiting Calculator. Goodbye!\n";
@@ -63,18 +93,18 @@ int main() {
 
         if (choice >= 1 && choice <= 5) {
             cout << "Enter first number: ";
-            cin >> num1;
+            num1 = getValidNumber();
             cout << "Enter second number: ";
-            cin >> num2;
+            num2 = getValidNumber();
         } else if (choice == 6) {
             cout << "Enter a number: ";
-            cin >> num1;
+            num1 = getValidNumber();
             result = squareRoot(num1);
             cout << "Result: " << result << endl;
             continue;
         } else if (choice == 7) {
             cout << "Enter an angle in degrees: ";
-            cin >> num1;
+            num1 = getValidNumber();
             double radians = num1 * M_PI / 180; // Convert degrees to radians
             cout << "sin(" << num1 << ") = " << sin(radians) << endl;
             cout << "cos(" << num1 << ") = " << cos(radians) << endl;
